@@ -21,6 +21,7 @@
 >SimulationWithCovMat(CovMatrixWt, data1, <strong>500</strong>, mu_beta)<br> 
 <p>(Also, within the functions themselves, it is possible to run a truncated version of the dataset (for speed of computation; not recommended for analysis) than creates a random sample of the data proportional to treatment status. If <strong>.2</strong> is chosen, for example, it will randomly select 20% of the data, maintaining the ratio of treated and control observations. Within the functions themselves, you can comment out (# before a command line) for the full data set:</p>
 <blockquote>
+    <code>
 S2<<-as.matrix(CovMatrixWt,nrow=nrow(CovMatrixWt),ncol=ncol(CovMatrixWt))<br>
 #S2<<-as.matrix(CovMatrixWt,nrow=5,ncol=5)<br>
 set.seed(6)#ensures same results for random components (e.g., partitioning data, random variable selection, etc.)<br>
@@ -28,6 +29,7 @@ colnames(data1)[1]<<-"SC048Q01"<br>
 <strong>#</strong>dpart<<-createDataPartition(data1$treat, p=0.2, list=F)<br>
 <strong>#</strong>data2<<-data1 [dpart,]<br>
 data2<<-data1<br>
+    </code>
 </blockquote>
 or for the partial data set (in this case, 20 percent):<br>
 <blockquote>
