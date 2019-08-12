@@ -29,10 +29,12 @@ colnames(data1)[1]<<-"SC048Q01"<br>
 <strong>#</strong>data2<<-data1 [dpart,]<br>
 data2<<-data1<br>
 </blockquote>
-<p>or for the partial data set (in this case, 20 percent):</p>
->dpart<<-createDataPartition(data1$treat, <strong>p=0.2</strong>, list=F)<br>
->data2<<-data1 [dpart,]<br>
->#data2<<-data1<br>
+or for the partial data set (in this case, 20 percent):<br>
+<blockquote>
+dpart<<-createDataPartition(data1$treat, <strong>p=0.2</strong>, list=F)<br>
+data2<<-data1 [dpart,]<br>
+#data2<<-data1<br>
+</blockquote>
 for 20% (p = 0.2). Search the function themselves to find these lines. With some functions, e.g., Functions13Sub.R, Functions18.R, and Functions5VAR500.R, it is not possible to use the partition option as these functions require the full number of observations. Here is a brief explanation of the functions. A full explanation can be found in the Appendix of the dissertation.
 Functions5SR.R--Performs matching on the data and is used with "ExampleCodeSim15Vars2LevNormWt.R".
 Functions6SR.R--Performs trimming on data based on algorithm by Imbens and Rubin (2015). Also used with  
