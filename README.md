@@ -21,7 +21,6 @@
 >SimulationWithCovMat(CovMatrixWt, data1, <strong>500</strong>, mu_beta)<br> 
 <p>(Also, within the functions themselves, it is possible to run a truncated version of the dataset (for speed of computation; not recommended for analysis) than creates a random sample of the data proportional to treatment status. If <strong>.2</strong> is chosen, for example, it will randomly select 20% of the data, maintaining the ratio of treated and control observations. Within the functions themselves, you can comment out (# before a command line) for the full data set:</p>
 <blockquote>
-    <code>
 S2<<-as.matrix(CovMatrixWt,nrow=nrow(CovMatrixWt),ncol=ncol(CovMatrixWt))<br>
 #S2<<-as.matrix(CovMatrixWt,nrow=5,ncol=5)<br>
 set.seed(6)#ensures same results for random components (e.g., partitioning data, random variable selection, etc.)<br>
@@ -29,8 +28,7 @@ colnames(data1)[1]<<-"SC048Q01"<br>
 <strong>#</strong>dpart<<-createDataPartition(data1$treat, p=0.2, list=F)<br>
 <strong>#</strong>data2<<-data1 [dpart,]<br>
 data2<<-data1<br>
-    </code>
-</blockquote>
+   </blockquote>
 or for the partial data set (in this case, 20 percent):<br>
 <blockquote>
 dpart<<-createDataPartition(data1$treat, <strong>p=0.2</strong>, list=F)<br>
@@ -38,9 +36,11 @@ data2<<-data1 [dpart,]<br>
 #data2<<-data1<br>
 </blockquote>
 <p>Search the function themselves to find these lines. With some functions, e.g.,<strong><i> Functions13Sub.R</strong></i>, <strong><i>Functions18.R</strong></i>, and<strong><i> Functions5VAR500.R</strong></i>, it is <strong>not possible to use the partition option as these functions require the full number of observations</strong>. Here is a brief explanation of the functions. A full explanation can be found in the Appendix of the dissertation.</p>
+<ol>
 *<strong><i>Functions5SR.R</strong></i>--Performs matching on the data and is used with "ExampleCodeSim15Vars2LevNormWt.R".<br>
 *<strong><i>Functions6SR.R</strong></i>--Performs trimming on data based on algorithm by Imbens and Rubin (2015). Also used with  
     "ExampleCodeSim15Vars2LevNormWt.R".<br>
+    </ol>
 Functions7SR.R--Performs joint modeling imputation based on van Buuren (2012). The lauching application for this function is "ExampleMARMissingJOMO.R".
 Functions8SR.R--Performs matching on multiply imputed data sets (n = 5) through the SPSS multiple imputation function. Missing-at-random (MAR) data was created through a van Buuren (2012) algorithm.
 ExampleCodeSim15Vars2LevNormWtEMImpute--Used in conjunction with Functions5SR.R for performing mathcing on expectation maximization (EM) imputed data (SPSS). 
