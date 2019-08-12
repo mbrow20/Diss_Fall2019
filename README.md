@@ -1,9 +1,8 @@
 # Diss_Fall2019
 <p>These are the functions and the .csv data and datasets used for the simulation of the dissertation. Below is a description of the different functions. Many of the functions are run through "ExampleCodeSim15Vars2LevNormWt.R". To utilize the various functions within this R script, specify using the source(), as in 'source("Functions13Sub.R")'. In the last line of the 'ExampleCodeSim15Vars2Lev'-class of launch applications you can specify the number of iterations to run for the simulation. Here is an example,</p>
-<br/>
-SimulationWithCovMat(CovMatrixWt,data1,10,mu_beta), 
-<br/>
-where the number of simulations to run is ten. Also, within the functions themselves, it is possible to run a truncated version of the dataset (for speed of computation; not recommended for analysis) than creates a random sample of the data proportional to treatment status. If **.2** is chosen, for example, it will randomly select 20% of the data, maintaining the ratio of treated and control observations. Within the functions themselves, you can comment out (# before a command line)
+**SimulationWithCovMat(CovMatrixWt,data1,10,mu_beta)**, 
+
+<p>where the number of simulations to run is ten. Also, within the functions themselves, it is possible to run a truncated version of the dataset (for speed of computation; not recommended for analysis) than creates a random sample of the data proportional to treatment status. If **.2** is chosen, for example, it will randomly select 20% of the data, maintaining the ratio of treated and control observations. Within the functions themselves, you can comment out (# before a command line)</p>
 <br/>
   #dpart<<-createDataPartition(data1$treat,p=0.2,list=F)
   #data2<<-data1[dpart,]
