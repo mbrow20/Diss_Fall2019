@@ -50,7 +50,7 @@ data2<<-data1 [dpart,]<br>
 <li><strong>Functions18.R</strong>--Performs Bayesian Additive Regression Trees (BART; Hill, 2011) for estimating ATE. Used with "ExampleCodeSim15Vars2LevBART.R". The partition feature is not allowed with this function.</li>
 <li><strong>FunctionsRobustRegression.R</strong>--Performs robust regression (i.e., with interactions and polynomials) with matched and unmatched data. Used with "ExampleCodeSim15Vars2LevNormWt.R".</li>
 <li><strong>FunctionsDR.R</strong>--Performs "doubly"-robust estimation (Robins et al., 1995). Used with "ExampleCodeSim15Vars2LevNormWt.R".</li>
-<li><strong>Functions5VAR500.R</strong>--Generates 500 matched data sets that are saved to the global environment and must be run prior to running "FunctionsImbensRubinVarEst500.R". This function must be fun with 500 iterations, i.e. SimulationWithCovMat(CovMatrixWt,data1,500,mu_beta). </li>
-<li><strong>FunctionsImbensRubinVarEst500.R</strong>--Estimates variance of ATE based on algorithm by Imbens and Rubin (2015). Must be run after running "Functions5VAR500.R".</li>
+<li><strong>Functions5VAR500.R</strong>--Generates 500 matched data sets that are saved to the global environment and must be run prior to running <strong>FunctionsImbensRubinVarEst500.R</strong>. This function must be fun with 500 iterations, i.e. SimulationWithCovMat(CovMatrixWt,data1,500,mu_beta). </li>
+<li><strong>FunctionsImbensRubinVarEst500.R</strong>--Estimates variance of ATE based on algorithm by Imbens and Rubin (2015). Must be run after running <strong>Functions5VAR500.R</strong>.</li>
 <li><strong>SensitivityAnalysis</strong>--Performs sensitivity analysis on simulated data. Based on design-based model proposed by Imbens and Rubin (2015).</li>
    </ol>
