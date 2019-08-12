@@ -4,7 +4,7 @@
 
 <p>where the number of simulations to run is ten. Here is an example where the launch' application "ExampleCodeSim15Vars2LevlNormWt.R' calls the function <strong><i>Functions6SR.R</i></strong> (a functions that performs data trimming) with 500 iterations:</p>
 
->rm(list=ls())\\
+>rm(list=ls())<br>
 >gc()\\
 >setwd("C:/Users/Mark V. Brow/Desktop/PISA2015/PropensityScoreAnalysis")#Change to your file directory
 >source("Functions5SR.R")
