@@ -35,14 +35,14 @@ dpart<<-createDataPartition(data1$treat, <strong>p=0.2</strong>, list=F)<br>
 data2<<-data1 [dpart,]<br>
 #data2<<-data1<br>
 </blockquote>
-<p>Search the function themselves to find these lines. With some functions, e.g.,<strong><i> Functions13Sub.R</strong></i>, <strong><i>Functions18.R</strong></i>, and<strong><i> Functions5VAR500.R</strong></i>, it is <strong>not possible to use the partition option as these functions require the full number of observations</strong>. Here is a brief explanation of the functions. A full explanation can be found in the Appendix of the dissertation.</p>
+<p>Search the function themselves to find these lines. With some functions, e.g.,<strong><i> Functions13Sub.R</strong></i>, <strong><i>Functions18.R</strong></i>, and<strong><i> Functions5VAR500.R</strong></i>, it is <strong>not possible to use the partition option as these functions require the full number of observations</strong>. Here is a brief explanation of the functions. A full explanation can be found in the <i>Appendix</i> of the dissertation.</p>
 <ol>
 <li><strong>Functions5SR.R</strong>--Performs matching on the data and is used with "ExampleCodeSim15Vars2LevNormWt.R".</li>
 <li><strong>Functions6SR.R</strong>--Performs trimming on data based on algorithm by Imbens and Rubin (2015). Also used with  
    "ExampleCodeSim15Vars2LevNormWt.R".</li>
 <li><strong>Functions7SR.R</strong>--Performs joint modeling imputation based on van Buuren (2012). The lauching application for this function is "ExampleMARMissingJOMO.R".</li>
 <li><strong>Functions8SR.R</strong>--Performs matching on multiply imputed data sets (n = 5) through the SPSS multiple imputation function. Missing-at-random (MAR) data was created through a van Buuren (2012) algorithm.</li>
-<li><strong>ExampleCodeSim15Vars2LevNormWtEMImpute</strong>--Used in conjunction with Functions5SR.R for performing mathcing on expectation maximization (EM) imputed data (SPSS).</li>
+<li><strong>ExampleCodeSim15Vars2LevNormWtEMImpute</strong>--Used in conjunction with <strong>Functions5SR.R</strong> for performing mathcing on expectation maximization (EM) imputed data (SPSS).</li>
 <li><strong>Functions12.R</strong>--Performs a bootstrapping procedure outlined by Zou et al. (2016) for determine the S.E. for the average treatment effect (ATE). This saves the treatment estimates and s.e. of the treatment effect in an Excel file in the current directory names "boot.est2.csv".</li>
 <li><strong>Functions13Sub.R</strong>--Analyzes data subclassified by propensity score strata or ranges. Used in junction with its launch application, "ExampleCodeSime15Vars2LevSub.R". It is not allowed to used the partition feature on this data.</li>
 <li><strong>Functions14.R</strong>--Performs mathcing with propensity score estimated through generalized boosted modeling (GBM; Ridgeway, 1999).Used with "ExampleCodeSim15Vars2LevNormWt.R".</li>
