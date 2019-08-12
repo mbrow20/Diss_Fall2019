@@ -16,9 +16,9 @@
 >library(plyr)<br>
 >CovMatrixWt<-read.csv("CovMat15Vars2LevZWt.csv",header=TRUE,sep=",")<br>
 >data1<-read.csv("CAN2015_15Vars2LevWithNormWt.csv",header=TRUE,sep=",")<br>
->mu_beta<<-c(1.1,.02,-1,2,1.5,0.04,1.2,-1.3,0.8,-0.5,-1.4,0.3,-0.3,0.75,1.6,-0.98)<br>
+>mu_beta<<-c(1.1, .02, -1, 2, 1.5, 0.04, 1.2, -1.3, 0.8, -0.5, -1.4, 0.3, -0.3, 0.75, 1.6, -0.98)<br>
 >#The 4th variable has a true beta coefficient of '2'###<br>
->SimulationWithCovMat(CovMatrixWt,data1,<strong>500</strong>,mu_beta)#This uses the PS<br> 
+>SimulationWithCovMat(CovMatrixWt, data1, <strong>500</strong>, mu_beta)<br> 
 <p>(Also, within the functions themselves, it is possible to run a truncated version of the dataset (for speed of computation; not recommended for analysis) than creates a random sample of the data proportional to treatment status. If **.2** is chosen, for example, it will randomly select 20% of the data, maintaining the ratio of treated and control observations. Within the functions themselves, you can comment out (# before a command line)</p>
 <br/>
   #dpart<<-createDataPartition(data1$treat,p=0.2,list=F)
