@@ -35,7 +35,7 @@ dpart<<-createDataPartition(data1$treat, <strong>p=0.2</strong>, list=F)<br>
 data2<<-data1 [dpart,]<br>
 #data2<<-data1<br>
 </blockquote>
-<p>Search the function themselves to find these lines. With some functions, e.g.,<strong><i> Functions13Sub.R</strong></i>, <strong><i>Functions18.R</strong></i>, and<strong><i> Functions5VAR500.R</strong></i>, it is <em><strong>not</strong> possible to use the partition option as these functions require the full number of observations</em>. Here is a brief explanation of the functions. A full explanation can be found in the Appendix of the dissertation.</p>
+<p>Search the function themselves to find these lines. With some functions, e.g.,<strong><i> Functions13Sub.R</strong></i>, <strong><i>Functions18.R</strong></i>, and<strong><i> Functions5VAR500.R</strong></i>, it is <strong>not possible to use the partition option as these functions require the full number of observations</strong>. Here is a brief explanation of the functions. A full explanation can be found in the Appendix of the dissertation.</p>
 Functions5SR.R--Performs matching on the data and is used with "ExampleCodeSim15Vars2LevNormWt.R".
 Functions6SR.R--Performs trimming on data based on algorithm by Imbens and Rubin (2015). Also used with  
     "ExampleCodeSim15Vars2LevNormWt.R".
