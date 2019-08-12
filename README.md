@@ -37,20 +37,20 @@ data2<<-data1 [dpart,]<br>
 </blockquote>
 <p>Search the function themselves to find these lines. With some functions, e.g.,<strong><i> Functions13Sub.R</strong></i>, <strong><i>Functions18.R</strong></i>, and<strong><i> Functions5VAR500.R</strong></i>, it is <strong>not possible to use the partition option as these functions require the full number of observations</strong>. Here is a brief explanation of the functions. A full explanation can be found in the Appendix of the dissertation.</p>
 <ol>
-<li><strong><i>Functions5SR.R</strong></i>--Performs matching on the data and is used with "ExampleCodeSim15Vars2LevNormWt.R".</li>
-<li><strong><i>Functions6SR.R</strong></i>--Performs trimming on data based on algorithm by Imbens and Rubin (2015). Also used with  
+<li><strong>Functions5SR.R</strong>--Performs matching on the data and is used with "ExampleCodeSim15Vars2LevNormWt.R".</li>
+<li><strong>Functions6SR.R</strong>--Performs trimming on data based on algorithm by Imbens and Rubin (2015). Also used with  
    "ExampleCodeSim15Vars2LevNormWt.R".</li>
-<li><strong><i>Functions7SR.R</strong></i>--Performs joint modeling imputation based on van Buuren (2012). The lauching application for this function is "ExampleMARMissingJOMO.R".</li>
-<li><strong><i>Functions8SR.R</strong></i>--Performs matching on multiply imputed data sets (n = 5) through the SPSS multiple imputation function. Missing-at-random (MAR) data was created through a van Buuren (2012) algorithm.</li>
-<li><strong><i>ExampleCodeSim15Vars2LevNormWtEMImpute</strong></i>--Used in conjunction with Functions5SR.R for performing mathcing on expectation maximization (EM) imputed data (SPSS).</li>
-<li><strong><i>Functions12.R</strong></i>--Performs a bootstrapping procedure outlined by Zou et al. (2016) for determine the S.E. for the average treatment effect (ATE). This saves the treatment estimates and s.e. of the treatment effect in an Excel file in the current directory names "boot.est2.csv".</li>
-<li><strong><i>Functions13Sub.R</strong></i>--Analyzes data subclassified by propensity score strata or ranges. Used in junction with its launch application, "ExampleCodeSime15Vars2LevSub.R". It is not allowed to used the partition feature on this data.</li>
-<li><strong><i>Functions14.R</strong></i>--Performs mathcing with propensity score estimated through generalized boosted modeling (GBM; Ridgeway, 1999).Used with "ExampleCodeSim15Vars2LevNormWt.R".</li>
-<li><strong><i>Functions16.R</strong></i>--Performs coarsened exact matching (CEM; Iacus et al., 2004) and is used with "ExampleCodeSim15Vars2LevNormWt.R".</li>
-<li><strong><i>Functions18.R</strong></i>--Performs Bayesian Additive Regression Trees (BART; Hill, 2011) for estimating ATE. Used with "ExampleCodeSim15Vars2LevBART.R". The partition feature is not allowed with this function.</li>
-<li><strong><i>FunctionsRobustRegression.R</strong></i>--Performs robust regression (i.e., with interactions and polynomials) with matched and unmatched data. Used with "ExampleCodeSim15Vars2LevNormWt.R".</li>
-<li><strong><i>FunctionsDR.R</strong></i>--Performs "doubly"-robust estimation (Robins et al., 1995). Used with "ExampleCodeSim15Vars2LevNormWt.R".</li>
-<li><strong><i>Functions5VAR500.R</strong></i>--Generates 500 matched data sets that are saved to the global environment and must be run prior to running "FunctionsImbensRubinVarEst500.R". This function must be fun with 500 iterations, i.e. SimulationWithCovMat(CovMatrixWt,data1,500,mu_beta). </li>
-<li><strong><i>FunctionsImbensRubinVarEst500.R</strong></i>--Estimates variance of ATE based on algorithm by Imbens and Rubin (2015). Must be run after running "Functions5VAR500.R".</li>
-<li><strong><i>SensitivityAnalysis</strong></i>--Performs sensitivity analysis on simulated data. Based on design-based model proposed by Imbens and Rubin (2015).</li>
+<li><strong>Functions7SR.R</strong>--Performs joint modeling imputation based on van Buuren (2012). The lauching application for this function is "ExampleMARMissingJOMO.R".</li>
+<li><strong>Functions8SR.R</strong>--Performs matching on multiply imputed data sets (n = 5) through the SPSS multiple imputation function. Missing-at-random (MAR) data was created through a van Buuren (2012) algorithm.</li>
+<li><strong>ExampleCodeSim15Vars2LevNormWtEMImpute</strong>--Used in conjunction with Functions5SR.R for performing mathcing on expectation maximization (EM) imputed data (SPSS).</li>
+<li><strong>Functions12.R</strong>--Performs a bootstrapping procedure outlined by Zou et al. (2016) for determine the S.E. for the average treatment effect (ATE). This saves the treatment estimates and s.e. of the treatment effect in an Excel file in the current directory names "boot.est2.csv".</li>
+<li><strong>Functions13Sub.R</strong>--Analyzes data subclassified by propensity score strata or ranges. Used in junction with its launch application, "ExampleCodeSime15Vars2LevSub.R". It is not allowed to used the partition feature on this data.</li>
+<li><strong>Functions14.R</strong>--Performs mathcing with propensity score estimated through generalized boosted modeling (GBM; Ridgeway, 1999).Used with "ExampleCodeSim15Vars2LevNormWt.R".</li>
+<li><strong>Functions16.R</strong>--Performs coarsened exact matching (CEM; Iacus et al., 2004) and is used with "ExampleCodeSim15Vars2LevNormWt.R".</li>
+<li><strong>Functions18.R</strong>--Performs Bayesian Additive Regression Trees (BART; Hill, 2011) for estimating ATE. Used with "ExampleCodeSim15Vars2LevBART.R". The partition feature is not allowed with this function.</li>
+<li><strong>FunctionsRobustRegression.R</strong>--Performs robust regression (i.e., with interactions and polynomials) with matched and unmatched data. Used with "ExampleCodeSim15Vars2LevNormWt.R".</li>
+<li><strong>FunctionsDR.R</strong>--Performs "doubly"-robust estimation (Robins et al., 1995). Used with "ExampleCodeSim15Vars2LevNormWt.R".</li>
+<li><strong>Functions5VAR500.R</strong>--Generates 500 matched data sets that are saved to the global environment and must be run prior to running "FunctionsImbensRubinVarEst500.R". This function must be fun with 500 iterations, i.e. SimulationWithCovMat(CovMatrixWt,data1,500,mu_beta). </li>
+<li><strong>FunctionsImbensRubinVarEst500.R</strong>--Estimates variance of ATE based on algorithm by Imbens and Rubin (2015). Must be run after running "Functions5VAR500.R".</li>
+<li><strong>SensitivityAnalysis</strong>--Performs sensitivity analysis on simulated data. Based on design-based model proposed by Imbens and Rubin (2015).</li>
    </ol>
