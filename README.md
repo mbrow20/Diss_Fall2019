@@ -1,5 +1,5 @@
 # Diss_Fall2019
-These are the functions and the .csv data and datasets used for the simulation of the dissertation. Below is a description of the different functions. Many of the functions are run through *ExampleCodeSim15Vars2LevNormWt.R*. To utilize the various functions within this R script, specify using the source(), as in 'source("Functions13Sub.R")'. In the last line of the 'ExampleCodeSim15Vars2Lev'-class of launch applications you can specify the number of iterations to run for the simulation. Here is an example,
+<p>These are the functions and the .csv data and datasets used for the simulation of the dissertation. Below is a description of the different functions. Many of the functions are run through *ExampleCodeSim15Vars2LevNormWt.R*. To utilize the various functions within this R script, specify using the source(), as in 'source("Functions13Sub.R")'. In the last line of the 'ExampleCodeSim15Vars2Lev'-class of launch applications you can specify the number of iterations to run for the simulation. Here is an example,</p>
 <br/>
 SimulationWithCovMat(CovMatrixWt,data1,10,mu_beta), 
 <br/>
