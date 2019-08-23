@@ -521,9 +521,9 @@ SimulationWithCovMat=function(CovMatrixWt,data1,Sims,mu_beta){
   #S2<<-as.matrix(CovMatrixWt,nrow=5,ncol=5)
   set.seed(6)#ensures same results for random components (e.g., partitioning data, random variable selection, etc.)
   colnames(data1)[1]<<-"SC048Q01"
-  dpart<<-createDataPartition(data1$treat,p=0.2,list=F)
-  data2<<-data1[dpart,]
-  #data2<<-data1
+  #dpart<<-createDataPartition(data1$treat,p=0.2,list=F)
+  #data2<<-data1[dpart,]
+  data2<<-data1
   varNames<<-colnames(data2)
   n=nrow(data2)
   Q<<-length(unique(data2$STRATUM)) #Number of Explicit strata; Should be less than 'n'
@@ -701,6 +701,45 @@ SimulationWithCovMat=function(CovMatrixWt,data1,Sims,mu_beta){
     assign(paste0("glmOne",i),svyglm(Y~treat,design=get(paste0("design.ps",i))))
     assign(paste0("summglmOne",i),summary(get(paste0("glmOne",i))))
   }
+  ##create formula5 from covariates in GBM propensity score model
+  
+  form3<-gsub("ESCS \\+ ","",PSformulaUnWt1)
+  newvar<-gsub("ESCS:SC048Q01 \\+ ","",form3[3])
+  newvar<-gsub("SC048Q01:ESCS \\+ ","",newvar)
+  newvar<-gsub("ST011Q07:ESCS \\+ ","",newvar)
+  newvar<-gsub("BELONG:ESCS \\+ ","",newvar)
+  newvar<-gsub("ESCS:ST011Q07 \\+ ","",newvar)
+  newvar<-gsub("ESCS:BELONG \\+ ","",newvar)
+  newvar<-gsub("ESCS:ST118Q04 \\+ ","",newvar)
+  newvar<-gsub("ESCS:MISCED \\+ ","",newvar)
+  newvar<-gsub("ESCS:ST013Q01 \\+ ","",newvar)
+  newvar<-gsub("\\+ ESCS:ST011Q07","",newvar)
+  formula5<-as.formula(paste("ESCS ~", newvar))
+  
+  #######Sensitivity Analysis##############################
+  
+  test_dataGLM<-cbind(test_data5, ps.binary1$w)
+  sen_control<<-subset(test_dataGLM,test_dataGLM$treat==0)
+  sen_treat<<-subset(test_dataGLM, test_dataGLM$treat==1)
+  num_cont<<-dim(sen_control)[1]
+  num_treat<<-dim(sen_treat)[1]
+  design.control<<-svydesign(ids = ~1, weights=sen_control$es.max.ATE,data=sen_control)
+  design.treat<<-svydesign(ids = ~1, weights=sen_treat$es.max.ATE,data=sen_treat)
+  lmSen_cont<<-svyglm(formula5, design=design.control)
+  lmSen_treat<<-svyglm(formula5, design=design.treat)
+  summ_cont<<-summary(lmSen_cont)
+  summ_treat<<-summary(lmSen_treat)
+  indx<<-(length(summ_cont$coefficients)/4)+1
+  indx2<<-(length(summ_treat$coefficients)/4)+1
+  se_1<<-summ_cont$coefficients[indx]
+  se_2<<-summ_treat$coefficients[indx2]
+  beta_1<<-summ_cont$coefficients[1]
+  beta_2<<-summ_treat$coefficients[1]
+  t_beta=(beta_1 - beta_2)/sqrt((se_1)^2 + (se_2)^2)
+  nu=((((se_1)^2/num_cont)+((se_2)^2/num_treat))^2)/
+    ((1/(num_cont-1))*(((se_1)^2/num_cont)^2)+(1/(num_treat-1))*(((se_2)^2/num_treat)^2))
+  
+  ############END of SENSITIVITY ANALYSIS#####################
   
   ps.binaryOne<<-ps.binary1
   ps.binaryTwo<<-ps.binary2
@@ -742,4 +781,6 @@ SimulationWithCovMat=function(CovMatrixWt,data1,Sims,mu_beta){
   
   print(W)
   
+  W3<-sprintf("The t-test for the sensitivity analysis for matched units is t(%.0f)= %.2f",nu,t_beta)
+  print(W3)
 }

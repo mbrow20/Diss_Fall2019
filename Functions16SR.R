@@ -515,9 +515,9 @@ SimulationWithCovMat=function(CovMatrixWt,data1,Sims,mu_beta){
   #S2<<-as.matrix(CovMatrixWt,nrow=5,ncol=5)
   set.seed(6)#ensures same results for random components (e.g., partitioning data, random variable selection, etc.)
   colnames(data1)[1]<<-"SC048Q01"
-  dpart<<-createDataPartition(data1$treat,p=0.2,list=F)
-  data2<<-data1[dpart,]
-  #data2<<-data1
+  #dpart<<-createDataPartition(data1$treat,p=0.2,list=F)
+  #data2<<-data1[dpart,]
+  data2<<-data1
   varNames<<-colnames(data2)
   n=nrow(data2)
   Q<<-length(unique(data2$STRATUM)) #Number of Explicit strata; Should be less than 'n'
@@ -680,7 +680,68 @@ SimulationWithCovMat=function(CovMatrixWt,data1,Sims,mu_beta){
     assign("summMatched3", summary(get(paste0("m.out",i)))$reduction$'eQQ Mean')
     assign("summMatched4", summary(get(paste0("m.out",i)))$reduction$'eQQ Max')
   }
+  m.dataOne<<-m.data1
+  ##create formula4 from covariates in matched propensity score model
   
+  form3<-gsub("ESCS \\+ ","",PSformulaUnWt1)
+  newvar<-gsub("ESCS:SC048Q01 \\+ ","",form3[3])
+  newvar<-gsub("SC048Q01:ESCS \\+ ","",newvar)
+  newvar<-gsub("ST011Q07:ESCS \\+ ","",newvar)
+  newvar<-gsub("BELONG:ESCS \\+ ","",newvar)
+  newvar<-gsub("ESCS:ST011Q07 \\+ ","",newvar)
+  newvar<-gsub("ESCS:BELONG \\+ ","",newvar)
+  newvar<-gsub("ESCS:ST118Q04 \\+ ","",newvar)
+  newvar<-gsub("ESCS:MISCED \\+ ","",newvar)
+  newvar<-gsub("ESCS:ST013Q01 \\+ ","",newvar)
+  newvar<-gsub("ESCS:ST034Q01 \\+ ","",newvar)
+  newvar<-gsub("\\+ ESCS:ST011Q07","",newvar)
+  newvar<-gsub("\\+ ESCS:Female","",newvar)
+  formula4<-as.formula(paste("ESCS ~", newvar))
+  
+  m.outThree<<-m.out3
+  formulaFOUR<<-formula4
+  ############Sensitivity Analysis for Matched Units###############
+  sen_treat=as.data.frame(subset(m.dataOne,m.dataOne$treat==1))
+  sen_control=as.data.frame(subset(m.dataOne,m.dataOne$treat==0))
+  num_cont<<-dim(sen_control)[1]
+  num_treat<<-dim(sen_treat)[1]
+  lmSen_cont<<-lm(formula4, data=sen_control)
+  lmSen_treat<<-lm(formula4, data=sen_treat)
+  summ_cont<<-summary(lmSen_cont)
+  summ_treat<<-summary(lmSen_treat)
+  indx<<-(length(summ_cont$coefficients)/4)+1
+  indx2<<-(length(summ_treat$coefficients)/4)+1
+  se_1<<-summ_cont$coefficients[indx]
+  se_2<<-summ_treat$coefficients[indx2]
+  beta_1<<-summ_cont$coefficients[1]
+  beta_2<<-summ_treat$coefficients[1]
+  t_beta=(beta_1 - beta_2)/sqrt((se_1)^2 + (se_2)^2)
+  nu=((((se_1)^2/num_cont)+((se_2)^2/num_treat))^2)/
+    ((1/(num_cont-1))*(((se_1)^2/num_cont)^2)+(1/(num_treat-1))*(((se_2)^2/num_treat)^2))
+  #######Sensitivity Analysis for Unmatched Units################################################
+  
+  test_dataThree<<-as.data.frame(test_data3)
+  dataUM_cont<<-subset(test_dataThree, test_dataThree$treat==0)
+  dataUM_treat<<-subset(test_dataThree, test_dataThree$treat==1)
+  numUM_cont<<-dim(dataUM_cont)[1]
+  numUM_treat<<-dim(dataUM_treat)[1]
+  lmSenUM_cont<<-lm(formula4, data=dataUM_cont)
+  lmSenUM_treat<<-lm(formula4, data=dataUM_treat)
+  summUM_cont<<-summary(lmSenUM_cont)
+  summUM_treat<<-summary(lmSenUM_treat)
+  indxUM<<-(length(summUM_cont$coefficients)/4)+1
+  indx2UM<<-(length(summUM_treat$coefficients)/4)+1
+  se_1UM<<-summUM_cont$coefficients[indxUM]
+  se_2UM<<-summUM_treat$coefficients[indx2UM]
+  beta_1UM<<-summUM_cont$coefficients[1]
+  beta_2UM<<-summUM_treat$coefficients[1]
+  t_betaUM=(beta_1UM - beta_2UM)/sqrt((se_1UM)^2 + (se_2UM)^2)
+  nuUM=((((se_1UM)^2/numUM_cont)+((se_2UM)^2/numUM_treat))^2)/
+    ((1/(numUM_cont-1))*(((se_1UM)^2/numUM_cont)^2)+(1/(numUM_treat-1))*(((se_2UM)^2/numUM_treat)^2))
+  
+  ######################END OF SENSITIVITY ANALYSIS####################################################
+  
+
   ##Save objects as global in order to manipulate outside function
   
   m.outtwo<<-m.out2
@@ -745,4 +806,7 @@ SimulationWithCovMat=function(CovMatrixWt,data1,Sims,mu_beta){
   #plot(summary(m.out2,standardize=T),interactive=T)
   PercMeanDiffTable<<-PercMeanDiffTable
   TFrameCEM<<-TFrame
+  W3<-sprintf("The t-test for the sensitivity analysis for matched units is t(%.0f)= %.2f,and for unmatched
+              is t(%.0f)= %.2f",nu,t_beta,nuUM, t_betaUM)
+  print(W3)
 }

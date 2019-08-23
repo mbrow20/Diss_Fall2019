@@ -516,9 +516,9 @@ SimulationWithCovMat=function(CovMatrixWt,data1,Sims,mu_beta){
   #S2<<-as.matrix(CovMatrixWt,nrow=5,ncol=5)
   set.seed(4)#ensures same results for random components (e.g., partitioning data, random variable selection, etc.)
   colnames(data1)[1]<<-"SC048Q01"
-  dpart<<-createDataPartition(data1$treat,p=0.1,list=F)
-  data2<<-data1[dpart,]
-  #data2<<-data1
+  #dpart<<-createDataPartition(data1$treat,p=0.1,list=F)
+  #data2<<-data1[dpart,]
+  data2<<-data1
   varNames<<-colnames(data2)
   n=nrow(data2)
   Q<<-length(unique(data2$STRATUM)) #Number of Explicit strata; Should be less than 'n'
@@ -660,6 +660,24 @@ SimulationWithCovMat=function(CovMatrixWt,data1,Sims,mu_beta){
     #assign(paste0("mr",i), lm(formula2, data=get(paste0("m.data1",i))))
     #assign(paste0("modelSumm",i), summary(get(paste0("mr",i))))
   }
+  ##create formula4 from covariates in matched propensity score model
+  
+  form3<-gsub("ESCS \\+ ","",PSformulaUnWt1)
+  newvar<-gsub("ESCS:SC048Q01 \\+ ","",form3[3])
+  newvar<-gsub("SC048Q01:ESCS \\+ ","",newvar)
+  newvar<-gsub("ST011Q07:ESCS \\+ ","",newvar)
+  newvar<-gsub("BELONG:ESCS \\+ ","",newvar)
+  newvar<-gsub("ESCS:ST011Q07 \\+ ","",newvar)
+  newvar<-gsub("ESCS:BELONG \\+ ","",newvar)
+  newvar<-gsub("ESCS:ST118Q04 \\+ ","",newvar)
+  newvar<-gsub("ESCS:MISCED \\+ ","",newvar)
+  newvar<-gsub("ESCS:ST013Q01 \\+ ","",newvar)
+  newvar<-gsub("\\+ ESCS:ST011Q07","",newvar)
+  formula4<-as.formula(paste("ESCS ~", newvar))
+  
+  
+  formulaFOUR<<-formula4
+  
   PSformulaUnWt1<<-PSformulaUnWt1
   formula2<<-formula2
   linearVarsOne<<-linearVars
@@ -704,7 +722,28 @@ SimulationWithCovMat=function(CovMatrixWt,data1,Sims,mu_beta){
     colnames(tmp5)[length(get(paste0("test_data",i)))]<-"ate"
     assign(yp2,tmp5)
   }
+  ####################Sensitivity Analysis#################################
   
+  sen_cont <<- as.data.frame(subset(test_data3, test_data3$treat==0))
+  sen_treat <<- as.data.frame(subset(test_data3, test_data3$treat==1))
+  num_cont<<-dim(sen_cont)[1]
+  num_treat<<-dim(sen_treat)[1]
+  lmSen_cont<<-lm(formula4, data=sen_cont, weights = sen_cont$ate)
+  lmSen_treat<<-lm(formula4, data=sen_treat, weights = sen_treat$ate)
+  summ_cont<<-summary(lmSen_cont)
+  summ_treat<<-summary(lmSen_treat)
+  indx<<-(length(summ_cont$coefficients)/4)+1
+  indx2<<-(length(summ_treat$coefficients)/4)+1
+  se_1<<-summ_cont$coefficients[indx]
+  se_2<<-summ_treat$coefficients[indx2]
+  beta_1<<-summ_cont$coefficients[1]
+  beta_2<<-summ_treat$coefficients[1]
+  t_beta=(beta_1 - beta_2)/sqrt((se_1)^2 + (se_2)^2)
+  nu=((((se_1)^2/num_cont)+((se_2)^2/num_treat))^2)/
+    ((1/(num_cont-1))*(((se_1)^2/num_cont)^2)+(1/(num_treat-1))*(((se_2)^2/num_treat)^2))
+  ###########End of Sensitivity Analysis#################################################
+  
+                             
   for(i in 1:Sims){
     assign(paste0("mr_doubler",i), lm(formula3,data=get(paste0("test_data",i)),weights = get(paste0("test_data",i))$ate))
     ##assign(paste0("m.out",i), matchit(formula1,data=get(paste0("test_data",i)), method= "nearest"))
@@ -754,5 +793,7 @@ SimulationWithCovMat=function(CovMatrixWt,data1,Sims,mu_beta){
   RootMean.um<-RMSE(actual.um,expected.um)
   W2<-sprintf("The RMSE of the matched units is %f and unmatched units is %f",RootMean.m, RootMean.um)
   print(W2)
+  W3<-sprintf("The t-test for the sensitivity analysis for doubly robust analysis is t(%.0f)= %.2f",nu,t_beta)
+  print(W3)
 }
 
