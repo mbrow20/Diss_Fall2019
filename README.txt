@@ -1,7 +1,7 @@
 README 
 
 BROW_Dissertation SAS Files
-September 3, 2019
+September 8, 2019
 
 The computing Q1-Q3 and SE on pv files compute the statistics
 (quantiles, medians, SEs) for the 10 plausible math values on 
@@ -16,5 +16,5 @@ by school type used the files MeanDiffOnVARCANUSA_Sep72019 (Means and SEs)
 and difference (PROCDIFNOPV_Sep72019). These programs will provide the full
 output of Table 4.20 and Table 4.21. Results will appear in the temporary
 work library. To change the country from Canada to the US, use the 
-following function in the data command:<span style="color:blue"> if cnt="USA";</span>
-then input this variable into the appropriate statements.
+following function in the data command:if cnt="USA"; . 
+
