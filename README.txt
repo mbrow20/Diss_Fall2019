@@ -10,11 +10,11 @@ for Tables 3.1 and 3.2 in the Methodology section using the MACROs
 proc_means_pv_10 (see the %include statements in the individual
 SAS files). The dataset used for these file is
 STUDSCH_MERGED_2015USACAN.csv. There is a file import statement
-in the file PISA2015, MeanDiffOnVARCANUSA_Sept2019, and 
-PROCDIFNOPV_Sep2019. One of these files should be run first.
-The means, SEs, and contrasts for the covariates by school type used
-the files MeanDiffOnVARCANUSA_Sep2019 (Means and SEs) and difference
-(PROCDIFNOPV_Sep2019). Desired comparison variable must be inputted
-directly into the file with a corresponding output file (keep statements,
-retain statement, and VAR= in the BRR MACRO statement). If it is HOMEPOS,
+in the file PISA2015, MeanDiffOnVARCANUSA_Sep72019, and 
+PROCDIFNOPV_Sep72019. The means, SEs, and contrasts for the covariates
+by school type used the files MeanDiffOnVARCANUSA_Sep72019 (Means and SEs)
+and difference (PROCDIFNOPV_Sep72019). These programs will provide the full
+output of Table 4.20 and Table 4.21. Results will appear in the temporary
+work library. To change the country from Canada to the US, use the 
+following function in the data command:<span style="color:blue"> if cnt="USA";</span>
 then input this variable into the appropriate statements.
