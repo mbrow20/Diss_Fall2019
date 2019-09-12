@@ -34,7 +34,7 @@ dpart<<-createDataPartition(data1$treat, <strong>p=0.2</strong>, list=F)<br>
 data2<<-data1 [dpart,]<br>
 #data2<<-data1<br>
 </blockquote>
-<p>Search the function themselves to find these lines. With some functions, e.g.,<strong><i> Functions13Sub.R</strong></i>, <strong><i>Functions18.R</strong></i>, and<strong><i> Functions5VAR500.R</strong></i>, it is <strong>not possible to use the partition option as these functions require the full number of observations</strong>. Here is a brief explanation of the functions. A full explanation can be found in the <i>Appendix</i> of the dissertation.</p>
+<p>Search the function themselves to find these lines. With some functions, e.g.,<strong><i> Functions13Sub.R</strong></i>, <strong><i>Functions18.R</strong></i>, and<strong><i> Functions5VAR500.R</strong></i>, it is <strong>not possible to use the partition option as these functions require the full number of observations</strong>. Here is a brief explanation of the functions. A full explanation can be found in the <i>Appendix</i> of the dissertation. Most functions estimate RMSE, provide a table of balance statistics, and output a t-stat(df) for sensitivity analysis (null being no confounding due to unobserved covariates).</p>
 <ol>
 <li><strong>Functions5SR.R</strong>--Performs matching on the data and is used with "ExampleCodeSim15Vars2LevNormWt.R".</li>
 <li><strong>Functions6SR.R</strong>--Performs trimming on data based on algorithm by Imbens and Rubin (2015). Also used with  
