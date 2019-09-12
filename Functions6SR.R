@@ -512,9 +512,9 @@ SimulationWithCovMat=function(CovMatrixWt,data1,Sims,mu_beta){
   #S2<<-as.matrix(CovMatrixWt,nrow=5,ncol=5)
   set.seed(4)#ensures same results for random components (e.g., partitioning data, random variable selection, etc.)
   colnames(data1)[1]<<-"SC048Q01"
-  dpart<<-createDataPartition(data1$treat,p=0.2,list=F)
-  data2<<-data1[dpart,]
-  #data2<<-data1
+  #dpart<<-createDataPartition(data1$treat,p=0.2,list=F)
+  #data2<<-data1[dpart,]
+  data2<<-data1
   varNames<<-colnames(data2)
   n=nrow(data2)
   Q<<-length(unique(data2$STRATUM)) #Number of Explicit strata; Should be less than 'n'
@@ -705,6 +705,46 @@ SimulationWithCovMat=function(CovMatrixWt,data1,Sims,mu_beta){
     assign(paste0("modelSumm",i), summary(get(paste0("mr",i)))[[4]][[2]])
     assign(paste0("modelSE", i) , summary(get(paste0("mr",i)))[[4]][[18]])
   }
+  m.dataThree<<-m.data33
+  PSformulaUnWtOne<<-PSformulaUnWt1
+  
+  ##create formula4 from covariates in matched propensity score model
+  
+  form3<-gsub("ESCS \\+ ","",PSformulaUnWt1)
+  newvar<-gsub("ESCS:SC048Q01 \\+ ","",form3[3])
+  newvar<-gsub("SC048Q01:ESCS \\+ ","",newvar)
+  newvar<-gsub("ST011Q07:ESCS \\+ ","",newvar)
+  newvar<-gsub("BELONG:ESCS \\+ ","",newvar)
+  newvar<-gsub("ESCS:ST011Q07 \\+ ","",newvar)
+  newvar<-gsub("ESCS:BELONG \\+ ","",newvar)
+  newvar<-gsub("ESCS:ST118Q04 \\+ ","",newvar)
+  newvar<-gsub("ESCS:MISCED \\+ ","",newvar)
+  newvar<-gsub("ESCS:ST013Q01 \\+ ","",newvar)
+  newvar<-gsub("\\+ ESCS:ST011Q07","",newvar)
+  formula4<-as.formula(paste("ESCS ~", newvar))
+
+  formulaFour<<-formula4
+  
+  ############Sensitivity Analysis for Matched Units###############
+  
+  sen_treat<<-as.data.frame(m.dataThree[ which(m.dataThree$treat=='1'),])
+  sen_control<<-as.data.frame(m.dataThree[ which(m.dataThree$treat=='0'),])
+  num_cont<<-dim(sen_control)[1]
+  num_treat<<-dim(sen_treat)[1]
+  lmSen_cont<<-lm(formula4, data=sen_control)
+  lmSen_treat<<-lm(formula4, data=sen_treat)
+  summ_cont<<-summary(lmSen_cont)
+  summ_treat<<-summary(lmSen_treat)
+  indx<<-(length(summ_cont$coefficients)/4)+1
+  indx2<<-(length(summ_treat$coefficients)/4)+1
+  se_1<<-summ_cont$coefficients[indx]
+  se_2<<-summ_treat$coefficients[indx2]
+  beta_1<<-summ_cont$coefficients[1]
+  beta_2<<-summ_treat$coefficients[1]
+  t_beta=(beta_1 - beta_2)/sqrt((se_1)^2 + (se_2)^2)
+  nu=((((se_1)^2/num_cont)+((se_2)^2/num_treat))^2)/
+    ((1/(num_cont-1))*(((se_1)^2/num_cont)^2)+(1/(num_treat-1))*(((se_2)^2/num_treat)^2))
+  
   
   TFrame<-as.data.frame(rep(0,Sims),ncol=2)
   for (i in 1:Sims){
@@ -738,5 +778,7 @@ SimulationWithCovMat=function(CovMatrixWt,data1,Sims,mu_beta){
   RootMean.um<-RMSE(actual.um,expected.um)
   W2<-sprintf("The RMSE of the matched units is %f and unmatched units is %f",RootMean.m, RootMean.um)
   print(W2)
+  W3<-sprintf("The t-test for the sensitivity analysis for matched units is t(%.0f)= %.2f",nu,t_beta)
+  print(W3)
   options(warn=0)
 }
