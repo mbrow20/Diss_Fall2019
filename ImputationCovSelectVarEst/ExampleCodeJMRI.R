@@ -4,7 +4,7 @@
 ##variable to 'Y' and include as the second to last variable of the dataset. The last
 ##variable will be the student's id. We will use only one of the plausible values for this procedure.
 ####################################################################################
-source(ImbensRubinFunction.R)
+source("ImbensRubinFunction.R")
 source("JointModelRandomInterceptsFULL.R")
 source("FunctionsJMRI.R")
 source("FunctionsCovSelection.R")
