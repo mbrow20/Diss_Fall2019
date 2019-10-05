@@ -97,6 +97,8 @@ dfFULL5<<-as.data.frame(dfFULL5)
 m.out5<- matchit(PSformulaUnWt, data=dfFULL5, method="nearest", distance="logit")
 m.out5<<-matchit(PSformulaUnWt, data=dfFULL5, method="nearest", distance="logit")
 m.out5<<-m.out5
+m.out<-m.out1
+m.out<<-m.out1
 vec_One<- as.vector(row.names(m.out$match.matrix))
 vec_One<<-as.vector(row.names(m.out$match.matrix))
 vec_One<- as.numeric(vec_One)
