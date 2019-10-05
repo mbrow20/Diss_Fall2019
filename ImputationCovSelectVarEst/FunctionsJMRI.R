@@ -3,6 +3,7 @@ JointModelRandomInterceptsPS=function(data,varNames){
   indxNum<-dim(data)[2]
   indxNum2<-indxNum-2
   varNames<-colnames(data[,c(2:indxNum2)])
+  varNames<<-colnames(data[,c(2:indxNum2)])
   variablesForJMRI<-paste(varNames,collapse="+")
   variablesForJMRI<<-paste(varNames,collapse="+")
   variablesForJMRI2<-paste(variablesForJMRI,"~1+(1|SCHID)")
@@ -39,7 +40,7 @@ JointModelRandomInterceptsPS=function(data,varNames){
   colnames(data4)[1]="treat"
   colnames(data4)[1]<<-"treat"
 } 
-JointModelRandomInterceptsPS(data1,varNames)
+JointModelRandomInterceptsPS(data4,varNames)
   indxSCHID=which(colnames(data4)=="SCHID")
   data5<<-data4[,-indxSCHID]
   indxCNTSTUID=which(colnames(data5)=="CNTSTUID")
