@@ -40,7 +40,7 @@ JointModelRandomInterceptsPS=function(data,varNames){
   colnames(data4)[1]="treat"
   colnames(data4)[1]<<-"treat"
 } 
-JointModelRandomInterceptsPS(data4,varNames)
+JointModelRandomInterceptsPS(data1,varNames)
   indxSCHID=which(colnames(data4)=="SCHID")
   data5<<-data4[,-indxSCHID]
   indxCNTSTUID=which(colnames(data5)=="CNTSTUID")
